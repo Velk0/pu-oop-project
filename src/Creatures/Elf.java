@@ -23,7 +23,9 @@ public class Elf extends Creature {
 
         return rowCoefficient <= 3 || colCoefficient <= 3;
     }
-
+    /*
+        Method checking if attack can be made
+     */
     @Override
     public boolean isAttackValid(int attackRow, int attackCol){
         return false;

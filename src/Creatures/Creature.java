@@ -10,6 +10,9 @@ public abstract class Creature {
     protected String id;
     protected int size = 80;
 
+    /*
+        Constructor for the Creatures
+     */
     public Creature(int row, int col, Color color, String id) {
 
         this.row = row;
@@ -18,17 +21,16 @@ public abstract class Creature {
         this.id = id;
     }
 
-    //public Creature(int row, int col, Color color) {
-//
-    //    this.row = row;
-    //    this.col = col;
-    //    this.color = color;
-    //}
-
+    /*
+        Getter for Row
+     */
     public int getRow() {
         return row;
     }
 
+    /*
+        Getter for Col
+     */
     public int getCol() {
         return col;
     }
@@ -38,6 +40,9 @@ public abstract class Creature {
         this.col = col;
     }
 
+    /*
+        Renderer for the creatures(setting their dimensions)
+     */
     public void render(Graphics g) {
 
         int x = this.col * size;
@@ -49,9 +54,13 @@ public abstract class Creature {
         g.setColor(Color.BLACK);
         g.drawString(this.id, x + 25, y + 25);
     }
-
+    /*
+        Abstract method
+     */
     public abstract boolean isMoveValid(int moveRow, int moveCol);
-
+    /*
+        Abstract method
+     */
     public abstract boolean isAttackValid(int attackRow, int attackCol);
 
 }

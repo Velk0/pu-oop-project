@@ -41,99 +41,121 @@ public class GameBoard extends JFrame /*implements MouseListener*/ {
             figures[5][3] = (new Dwarf(5, 3, Color.RED));
             figures[5][2] = (new Dwarf(5, 2, Color.RED));
 
-            while (counter < obstacleCount) {
-                int[] obstacleCoordinates = Obstacle();
-                int obstacleRow = obstacleCoordinates[0]; //TODO can save some lines from here
-                int obstacleCol = obstacleCoordinates[1]; //TODO can save some lines from here
-                if (figures[obstacleRow][obstacleCol] == null) {
-                    figures[obstacleRow][obstacleCol] = (new Obstacle(obstacleRow, obstacleCol, Color.CYAN));
-                    counter++;
-
-                }
-            }
+            //while (counter < obstacleCount) {
+            //    int[] obstacleCoordinates = Obstacle();
+            //    int obstacleRow = obstacleCoordinates[0];
+            //    int obstacleCol = obstacleCoordinates[1];
+            //    if (figures[obstacleRow][obstacleCol] == null) {
+            //        figures[obstacleRow][obstacleCol] = (new Obstacle(obstacleRow, obstacleCol, Color.CYAN));
+            //        counter++;
+//
+            //    }
+            //}
         }
 
+        /*
+            Getter for the selected Creature
+         */
         public Creature getSelectedPiece() {
 
             return selectedCreature;
 
         }
 
+        /*
+            Setter for the selected Creature
+         */
         public void setSelectedPiece(Creature selectedPiece) {
 
             this.selectedCreature = selectedPiece;
 
         }
 
-        public void movePiece(int row, int col, Creature p) {
-            // 1. Get the original coordinates of the selected piece
+        /*
+            Method assigning the new coordinates to the Creature that is being moved
+         */
+        public void moveCreature(int row, int col, Creature p) {
             int initialRow = p.getRow();
             int initialCol = p.getCol();
 
-            // 2. Move the piece to the new coordinates
             p.move(row, col);
 
-            // 3. Swap the reference to the selected piece from the original coordinates
             this.figures[p.getRow()][p.getCol()] = this.selectedCreature;
             this.figures[initialRow][initialCol] = null;
 
-            // 4. Remove reference to selected piece
             this.selectedCreature = null;
         }
 
-    private Color getTileColor(int row, int col) {
+        /*
+            Method getting the colors for the board
+         */
+        private Color getTileColor(int row, int col) {
 
-        if(row == 2 || row == 3 || row == 4) return Color.LIGHT_GRAY;
-        if(row == 0 || row == 1 || row == 5 || row == 6){
-            boolean isRowEven  = (row % 2 == 0);
-            boolean isRowOdd   = !isRowEven;
-            boolean isColEven  = (col % 2 == 0);
-            boolean isColOdd   = !isColEven;
+            if(row == 2 || row == 3 || row == 4) return Color.LIGHT_GRAY;
+            if(row == 0 || row == 1 || row == 5 || row == 6){
+                boolean isRowEven  = (row % 2 == 0);
+                boolean isRowOdd   = !isRowEven;
+                boolean isColEven  = (col % 2 == 0);
+                boolean isColOdd   = !isColEven;
 
-            if(isRowEven && isColEven   ) return Color.BLACK;
-            if(isRowEven && isColOdd    ) return Color.GRAY;
-            if(isRowOdd  && isColEven   ) return Color.GRAY;
+                if(isRowEven && isColEven   ) return Color.BLACK;
+                if(isRowEven && isColOdd    ) return Color.GRAY;
+                if(isRowOdd  && isColEven   ) return Color.GRAY;
+            }
+
+            return Color.BLACK;
+
         }
 
-        return Color.BLACK;
+        /*
+            Method rendering the tiles on the board
+         */
+        public void renderGameTile(Graphics g, int row, int col) {
 
-    }
-
-
-    public void renderGameTile(Graphics g, int row, int col) {
-
-        Color tileColor = this.getTileColor(row, col);
-        Tile tile = new Tile(row, col, tileColor);
-        tile.render(g);
-    }
-
-    public Creature getBoardPiece(int row, int col) {
-        return this.figures[row][col];
-    }
-
-    public boolean hasBoardPiece(int row, int col) {
-        return this.getBoardPiece(row, col) != null;
-    }
-
-    public int[] Obstacle(){
-        int[] coordinates = new int[2];
-        int col = random.nextInt(7);
-        int row = random.nextInt(9);
-        coordinates[0] = row-1;
-        coordinates[1] = col-1;
-        return coordinates;
-    }
-
-    public void renderGamePiece(Graphics g, int row, int col) {
-
-        if(this.hasBoardPiece(row, col)) {
-
-            Creature p = this.getBoardPiece(row, col);
-            p.render(g);
+            Color tileColor = this.getTileColor(row, col);
+            Tile tile = new Tile(row, col, tileColor);
+            tile.render(g);
         }
-    }
 
-    public int getBoardDimentionBasedOnCoordinates(int coordinates) {
-        return coordinates / Tile.TILE_SIZE;
-    }
+        /*
+            Method allowing us to work with the 2d array for the board indirectly
+         */
+        public Creature getBoardPiece(int row, int col) {
+            return this.figures[row][col];
+        }
+
+        /*
+            Method telling us of there is something on the Tile
+         */
+        public boolean hasBoardPiece(int row, int col) {
+            return this.getBoardPiece(row, col) != null;
+        }
+
+        /*
+            Method generating the coordinates for the Obstacles
+         */
+        public int[] Obstacle(){
+            int[] coordinates = new int[2];
+            int col = random.nextInt(7);
+            int row = random.nextInt(9);
+            coordinates[0] = row-1;
+            coordinates[1] = col-1;
+            return coordinates;
+        }
+
+        /*
+            Method rendering the Creatures
+         */
+        public void renderCreature(Graphics g, int row, int col) {
+
+            if(this.hasBoardPiece(row, col)) {
+
+                Creature p = this.getBoardPiece(row, col);
+                p.render(g);
+            }
+        }
+
+        public int getBoardDimentionBasedOnCoordinates(int coordinates) {
+            return coordinates / Tile.TILE_SIZE;
+        }
 }

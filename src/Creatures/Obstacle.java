@@ -32,12 +32,16 @@ public class Obstacle extends Creature {
         g.setColor(this.color);
         g.fillRect(tileX, tileY, size - border,  size - border);
     }
-
+    /*
+        Necessary empty method
+     */
     @Override
     public boolean isMoveValid(int moveRow, int moveCol) {
         return false;
     }
-
+    /*
+        Necessary empty method
+     */
     @Override
     public boolean isAttackValid(int attackRow, int attackCol) {
         return false;

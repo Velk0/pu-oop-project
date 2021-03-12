@@ -11,10 +11,8 @@ public class Renderer extends JFrame implements MouseListener {
 
     public Renderer(GameBoard gameBoardLogic) {
 
-        // Reference to game logic
         this.gameBoardLogic = gameBoardLogic;
 
-        // Reference to UI logic
         this.setSize((GameBoard.WIDTH_TILE_COUNT + 3) * Tile.TILE_SIZE, (GameBoard.HIGHT_TILE_COUNT* Tile.TILE_SIZE));
         this.setVisible(true);
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -22,6 +20,9 @@ public class Renderer extends JFrame implements MouseListener {
         this.addMouseListener(this);
     }
 
+    /*
+        Method moving the selected creature around
+     */
     @Override
     public void mouseClicked(MouseEvent e) {
 
@@ -35,15 +36,16 @@ public class Renderer extends JFrame implements MouseListener {
 
             if(f.isMoveValid(row, col)) {
 
-                this.gameBoardLogic.movePiece(row, col, f);
+                this.gameBoardLogic.moveCreature(row, col, f);
                 this.repaint();
+                return;
+            }
+            else {
+                Modal.render(this, "Внимание", "Невалиден ход, по дъската");
                 return;
             }
         }
 
-        // * move
-
-        // check if piece is available
         if(this.gameBoardLogic.hasBoardPiece(row, col)) {
             this.gameBoardLogic.setSelectedPiece(this.gameBoardLogic.getBoardPiece(row, col));
         }
@@ -69,14 +71,16 @@ public class Renderer extends JFrame implements MouseListener {
 
     }
 
-    @Override
+    /*
+        Method painting the elements
+     */
     public void paint(Graphics g) {
 
         for(int row = 0; row < GameBoard.HIGHT_TILE_COUNT; row++) {
             for(int col = 0; col < GameBoard.WIDTH_TILE_COUNT; col++) {
 
                 this.gameBoardLogic.renderGameTile(g, row, col);
-                this.gameBoardLogic.renderGamePiece(g, row, col);
+                this.gameBoardLogic.renderCreature(g, row, col);
             }
         }
     }

@@ -27,6 +27,9 @@ public class Knight extends Creature {
         return rowCoefficient == 1 || colCoefficient == 1;
     }
 
+    /*
+        Method checking if attack can be made
+     */
     @Override
     public boolean isAttackValid(int attackRow, int attackCol) {
         return false;

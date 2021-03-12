@@ -24,6 +24,9 @@ public class Dwarf extends Creature {
         return rowCoefficient <= 2 || colCoefficient <= 2;
     }
 
+    /*
+        Method checking if attack can be made
+     */
     @Override
     public boolean isAttackValid(int attackRow, int attackCol){
         return false;
