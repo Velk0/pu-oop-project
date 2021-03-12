@@ -1,15 +1,16 @@
-import Creatures.Creature;
-import Creatures.Dwarf;
-import Creatures.Elf;
-import Creatures.Knight;
+import Creatures.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Random;
 
 public class GameBoard extends JFrame /*implements MouseListener*/ {
 
         protected static final int HIGHT_TILE_COUNT = 7;
         protected static final int WIDTH_TILE_COUNT = 9;
+        protected int obstacleCount;
+        protected int counter;
+        Random random;
 
         private Creature[][] figures;
         private Creature selectedCreature;
@@ -17,7 +18,9 @@ public class GameBoard extends JFrame /*implements MouseListener*/ {
         /*
             Method, creating and constructing the field(board)
          */
-        public GameBoard(/*Creature[][] figures*/){
+        public GameBoard(/*Creature[][] figures*/) {
+            random = new Random();
+            obstacleCount = random.nextInt(5);
 
             this.figures = new Creature[HIGHT_TILE_COUNT][WIDTH_TILE_COUNT];
             // Knights
@@ -38,6 +41,16 @@ public class GameBoard extends JFrame /*implements MouseListener*/ {
             figures[5][3] = (new Dwarf(5, 3, Color.RED));
             figures[5][2] = (new Dwarf(5, 2, Color.RED));
 
+            while (counter < obstacleCount) {
+                int[] obstacleCoordinates = Obstacle();
+                int obstacleRow = obstacleCoordinates[0]; //TODO can save some lines from here
+                int obstacleCol = obstacleCoordinates[1]; //TODO can save some lines from here
+                if (figures[obstacleRow][obstacleCol] == null) {
+                    figures[obstacleRow][obstacleCol] = (new Obstacle(obstacleRow, obstacleCol, Color.CYAN));
+                    counter++;
+
+                }
+            }
         }
 
         public Creature getSelectedPiece() {
@@ -100,6 +113,15 @@ public class GameBoard extends JFrame /*implements MouseListener*/ {
 
     public boolean hasBoardPiece(int row, int col) {
         return this.getBoardPiece(row, col) != null;
+    }
+
+    public int[] Obstacle(){
+        int[] coordinates = new int[2];
+        int col = random.nextInt(7);
+        int row = random.nextInt(9);
+        coordinates[0] = row-1;
+        coordinates[1] = col-1;
+        return coordinates;
     }
 
     public void renderGamePiece(Graphics g, int row, int col) {
