@@ -11,7 +11,7 @@ public class Knight extends Creature {
         @param color for Knights
      */
     public Knight (int row, int col, Color color){
-        super(row, col, color, "Kn");
+        super(row, col, color, "K");
 
 
     }

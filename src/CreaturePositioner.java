@@ -13,6 +13,9 @@ public class CreaturePositioner {
         figures[5][6] = (new Knight(5, 6, Color.BLUE));
         figures[5][7] = (new Knight(5, 7, Color.BLUE));
 
+        // Elf
+        figures[1][3] = (new Elf(1, 3, Color.ORANGE));
+
         return figures;
     }
 }

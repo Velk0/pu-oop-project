@@ -9,7 +9,7 @@ public class Elf extends Creature {
         @param col col coordinate
         @param color for Knights
      */
-    public Elf (int row, int col, Color color, String id){
+    public Elf (int row, int col, Color color){
         super(row, col, color, "E");
     }
     @Override
@@ -21,7 +21,7 @@ public class Elf extends Creature {
         int rowCoefficient = Math.abs(moveRow - this.row);
         int colCoefficient = Math.abs(moveCol - this.col);
 
-        return rowCoefficient == 1 || colCoefficient == 1;
+        return rowCoefficient <= 3 || colCoefficient <= 3;
     }
 
     @Override
