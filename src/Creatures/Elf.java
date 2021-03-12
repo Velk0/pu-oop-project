@@ -2,7 +2,7 @@ package Creatures;
 
 import java.awt.*;
 
-public class Elf extends Creatures{
+public class Elf extends Creature {
     /*
         Constructor for Knight
         @param row row coordinate

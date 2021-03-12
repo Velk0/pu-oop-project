@@ -1,48 +1,67 @@
-import Creatures.Creatures;
+import Creatures.Creature;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class GameBoard extends JFrame /*implements MouseListener*/ {
-        private int hightTileCount = 7;
-        private int widthTileCount = 9;
-        private Creatures[][]figures;
+
+        protected static final int HIGHT_TILE_COUNT = 7;
+        protected static final int WIDTH_TILE_COUNT = 9;
+
+        private Creature[][] figures;
+        private Creature selectedCreature;
 
         /*
             Method, creating and constructing the field(board)
          */
-        public GameBoard (){
+        public GameBoard(Creature[][] figures){
 
-            this.figures = new Creatures[hightTileCount][widthTileCount];
+            this.figures = new Creature[HIGHT_TILE_COUNT][WIDTH_TILE_COUNT];
 
-
-
-
-            this.setSize((widthTileCount + 3) * Tile.TILE_SIZE, (hightTileCount* Tile.TILE_SIZE));
-            this.setVisible(true);
-            this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-            this.setTitle("Knights, Elves and Dwarfs");
-            //this.addMouseListener(this);
         }
 
-        public void renderField(Graphics g, int row, int col){
-            Color tileColor = Color.BLACK;
-            Tile tile = new Tile(row, col, tileColor);
-            tile.render(g);
+        public Creature getSelectedPiece() {
+            return selectedCreature;
+        }
+
+        public void setSelectedPiece(Creature selectedPiece) {
+            this.selectedCreature = selectedPiece;
+        }
+
+        public void movePiece(int row, int col, Creature p) {
+            // 1. Get the original coordinates of the selected piece
+            int initialRow = p.getRow();
+            int initialCol = p.getCol();
+
+            // 2. Move the piece to trhe new coordinates
+            p.move(row, col);
+
+            // 3. Swap the reference to the selected piece from the original coordinates
+            // TODO: Abstraction of piece collection
+            this.figures[p.getRow()][p.getCol()] = this.selectedCreature;
+            this.figures[initialRow][initialCol] = null;
+
+            // 4. Remove reference to selected piece
+            // TODO: Abstraction of selected piece access
+            this.selectedCreature = null;
         }
 
     private Color getTileColor(int row, int col) {
 
-        boolean isRowEven  = (row % 2 == 0);
-        boolean isRowOdd   = !isRowEven;
-        boolean isColEven  = (col % 2 == 0);
-        boolean isColOdd   = !isColEven;
+        if(row == 2 || row == 3 || row == 4) return Color.WHITE;
+        if(row == 0 || row == 1 || row == 5 || row == 6){
+            boolean isRowEven  = (row % 2 == 0);
+            boolean isRowOdd   = !isRowEven;
+            boolean isColEven  = (col % 2 == 0);
+            boolean isColOdd   = !isColEven;
 
-        if(isRowEven && isColEven   ) return Color.BLACK;
-        if(isRowEven && isColOdd    ) return Color.WHITE;
-        if(isRowOdd  && isColEven   ) return Color.WHITE;
+            if(isRowEven && isColEven   ) return Color.BLACK;
+            if(isRowEven && isColOdd    ) return Color.GRAY;
+            if(isRowOdd  && isColEven   ) return Color.GRAY;
+        }
 
         return Color.BLACK;
+
     }
 
 
@@ -53,7 +72,7 @@ public class GameBoard extends JFrame /*implements MouseListener*/ {
         tile.render(g);
     }
 
-    public Creatures getBoardPiece(int row, int col) {
+    public Creature getBoardPiece(int row, int col) {
         return this.figures[row][col];
     }
 
@@ -65,20 +84,12 @@ public class GameBoard extends JFrame /*implements MouseListener*/ {
 
         if(this.hasBoardPiece(row, col)) {
 
-            Creatures p = this.getBoardPiece(row, col);
+            Creature p = this.getBoardPiece(row, col);
             p.render(g);
         }
     }
 
-    public void paint(Graphics g) {
-
-        super.paint(g);
-
-        for (int row = 0; row < hightTileCount; row++) {
-            for (int col = 0; col < widthTileCount; col++) {
-
-                this.renderField(g, row, col);
-            }
-        }
+    public int getBoardDimentionBasedOnCoordinates(int coordinates) {
+        return coordinates / Tile.TILE_SIZE;
     }
 }

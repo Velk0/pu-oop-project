@@ -2,14 +2,14 @@ package Creatures;
 
 import java.awt.*;
 
-public abstract class Creatures {
+public abstract class Creature {
     protected int row;
     protected int col;
     protected Color color;
     protected String id;
     protected int size = 80;
 
-    public Creatures(int row, int col, Color color, String id) {
+    public Creature(int row, int col, Color color, String id) {
 
         this.row = row;
         this.col = col;
@@ -17,7 +17,11 @@ public abstract class Creatures {
         this.id = id;
     }
 
-    public Creatures(int row, int col, Color color) {
+    public Creature(int row, int col){
+        this(row, col, Color.BLACK, "C");
+    }
+
+    public Creature(int row, int col, Color color) {
 
         this.row = row;
         this.col = col;

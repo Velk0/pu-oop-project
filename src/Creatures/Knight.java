@@ -2,7 +2,7 @@ package Creatures;
 
 import java.awt.*;
 
-public class Knight extends Creatures {
+public class Knight extends Creature {
 
     /*
         Constructor for Knight
@@ -12,6 +12,8 @@ public class Knight extends Creatures {
      */
     public Knight (int row, int col, Color color, String id){
         super(row, col, color, "Kn");
+
+
     }
 
     @Override
