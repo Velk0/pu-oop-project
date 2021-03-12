@@ -2,7 +2,7 @@ import java.awt.*;
 
 public class Tile{
 
-    public static final int TILE_SIZE = 80;
+    protected static final int TILE_SIZE = 80;
     public static final int BORDER_OFFSET = 1;
     private int row;
     private int col;

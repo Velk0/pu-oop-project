@@ -1,17 +1,21 @@
+import Creatures.Creatures;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class GameBoard extends JFrame /*implements MouseListener*/ {
         private int hightTileCount = 7;
         private int widthTileCount = 9;
-        private Object[][]figures;
+        private Creatures[][]figures;
 
         /*
             Method, creating and constructing the field(board)
          */
         public GameBoard (){
 
-            this.figures = new Object[hightTileCount][widthTileCount];
+            this.figures = new Creatures[hightTileCount][widthTileCount];
+
+
 
 
             this.setSize((widthTileCount + 3) * Tile.TILE_SIZE, (hightTileCount* Tile.TILE_SIZE));
@@ -26,6 +30,45 @@ public class GameBoard extends JFrame /*implements MouseListener*/ {
             Tile tile = new Tile(row, col, tileColor);
             tile.render(g);
         }
+
+    private Color getTileColor(int row, int col) {
+
+        boolean isRowEven  = (row % 2 == 0);
+        boolean isRowOdd   = !isRowEven;
+        boolean isColEven  = (col % 2 == 0);
+        boolean isColOdd   = !isColEven;
+
+        if(isRowEven && isColEven   ) return Color.BLACK;
+        if(isRowEven && isColOdd    ) return Color.WHITE;
+        if(isRowOdd  && isColEven   ) return Color.WHITE;
+
+        return Color.BLACK;
+    }
+
+
+    public void renderGameTile(Graphics g, int row, int col) {
+
+        Color tileColor = this.getTileColor(row, col);
+        Tile tile = new Tile(row, col, tileColor);
+        tile.render(g);
+    }
+
+    public Creatures getBoardPiece(int row, int col) {
+        return this.figures[row][col];
+    }
+
+    public boolean hasBoardPiece(int row, int col) {
+        return this.getBoardPiece(row, col) != null;
+    }
+
+    public void renderGamePiece(Graphics g, int row, int col) {
+
+        if(this.hasBoardPiece(row, col)) {
+
+            Creatures p = this.getBoardPiece(row, col);
+            p.render(g);
+        }
+    }
 
     public void paint(Graphics g) {
 
