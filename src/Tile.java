@@ -24,11 +24,10 @@ public class Tile{
      */
     public void render(Graphics g){
 
-        int tileX    = this.col * TILE_SIZE;
-        int tileY    = this.row * TILE_SIZE;
+        int tileX = this.col * TILE_SIZE;
+        int tileY = this.row * TILE_SIZE;
 
         g.setColor(this.color);
-        //g.drawRect(tileX, tileY, PIXEL_SIZE-BORDER_OFFSET,  PIXEL_SIZE-BORDER_OFFSET);
         g.fillRect(tileX, tileY, TILE_SIZE-BORDER_OFFSET,  TILE_SIZE-BORDER_OFFSET);
     }
 

@@ -3,6 +3,7 @@ package Creatures;
 import java.awt.*;
 
 public abstract class Creature {
+    protected final int CREATURE_SIZE = 79;
     protected int row;
     protected int col;
     protected Color color;
@@ -17,18 +18,12 @@ public abstract class Creature {
         this.id = id;
     }
 
-    public Creature(int row, int col){
-        this(row, col, Color.BLACK, "C");
-    }
-
-    public Creature(int row, int col, Color color) {
-
-        this.row = row;
-        this.col = col;
-        this.color = color;
-    }
-
-
+    //public Creature(int row, int col, Color color) {
+//
+    //    this.row = row;
+    //    this.col = col;
+    //    this.color = color;
+    //}
 
     public int getRow() {
         return row;
@@ -49,7 +44,7 @@ public abstract class Creature {
         int y = this.row * size;
 
         g.setColor(this.color);
-        g.fillRect(x, y, 50, 50);
+        g.fillRect(x, y, CREATURE_SIZE, CREATURE_SIZE);
 
         g.setColor(Color.BLACK);
         g.drawString(this.id, x + 25, y + 25);

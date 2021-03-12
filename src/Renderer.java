@@ -31,12 +31,11 @@ public class Renderer extends JFrame implements MouseListener {
         // check if piece is already selected
         if(this.gameBoardLogic.getSelectedPiece() != null) {
 
-            // TODO: Update pieceCollection array in order to match the new coordinates
-            Creature p = this.gameBoardLogic.getSelectedPiece();
+            Creature f = this.gameBoardLogic.getSelectedPiece();
 
-            if(p.isMoveValid(row, col)) {
+            if(f.isMoveValid(row, col)) {
 
-                this.gameBoardLogic.movePiece(row, col, p);
+                this.gameBoardLogic.movePiece(row, col, f);
                 this.repaint();
                 return;
             }

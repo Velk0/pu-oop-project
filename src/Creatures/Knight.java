@@ -10,7 +10,7 @@ public class Knight extends Creature {
         @param col col coordinate
         @param color for Knights
      */
-    public Knight (int row, int col, Color color, String id){
+    public Knight (int row, int col, Color color){
         super(row, col, color, "Kn");
 
 
